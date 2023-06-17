@@ -1,0 +1,27 @@
+{
+  "version": 2,
+  "dgSpecHash": "WXiJDPfIjaX2Ev1b9xK3BvuL9t40Gjp4CC0KRqeJrp9AF6iDsCuxiS6+rFEAS3HyZ2VvVs2bYPzmEg8dySmk1g==",
+  "success": false,
+  "projectFilePath": "C:\\Users\\joseg\\source\\repos\\EventCalender\\EventCalender_proj\\EventCalender_proj\\Server\\EventCalender_proj.Server.csproj",
+  "expectedPackageFiles": [],
+  "logs": [
+    {
+      "code": "NU1101",
+      "level": "Error",
+      "message": "Unable to find package Microsoft.AspNetCore.Components.WebAssembly.Server. No packages exist with this id in source(s): C:\\Program Files\\dotnet\\sdk\\7.0.304\\Sdks\\Microsoft.NET.Sdk.Web\\library-packs, Microsoft Visual Studio Offline Packages",
+      "libraryId": "Microsoft.AspNetCore.Components.WebAssembly.Server",
+      "targetGraphs": [
+        "net7.0"
+      ]
+    },
+    {
+      "code": "NU1101",
+      "level": "Error",
+      "message": "Unable to find package Microsoft.AspNetCore.Components.WebAssembly. No packages exist with this id in source(s): C:\\Program Files\\dotnet\\sdk\\7.0.304\\Sdks\\Microsoft.NET.Sdk.Web\\library-packs, Microsoft Visual Studio Offline Packages",
+      "libraryId": "Microsoft.AspNetCore.Components.WebAssembly",
+      "targetGraphs": [
+        "net7.0"
+      ]
+    }
+  ]
+}

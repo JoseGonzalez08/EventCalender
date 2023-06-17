@@ -1,0 +1,152 @@
+{
+  "version": 3,
+  "targets": {
+    "net7.0": {
+      "EventCalender_proj.Client/1.0.0": {
+        "type": "project",
+        "framework": ".NETCoreApp,Version=v7.0",
+        "dependencies": {
+          "EventCalender_proj.Shared": "1.0.0",
+          "Microsoft.AspNetCore.Components.WebAssembly": "7.0.7"
+        },
+        "compile": {
+          "bin/placeholder/EventCalender_proj.Client.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/EventCalender_proj.Client.dll": {}
+        }
+      },
+      "EventCalender_proj.Shared/1.0.0": {
+        "type": "project",
+        "framework": ".NETCoreApp,Version=v7.0",
+        "compile": {
+          "bin/placeholder/EventCalender_proj.Shared.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/EventCalender_proj.Shared.dll": {}
+        }
+      }
+    }
+  },
+  "libraries": {
+    "EventCalender_proj.Client/1.0.0": {
+      "type": "project",
+      "path": "../Client/EventCalender_proj.Client.csproj",
+      "msbuildProject": "../Client/EventCalender_proj.Client.csproj"
+    },
+    "EventCalender_proj.Shared/1.0.0": {
+      "type": "project",
+      "path": "../Shared/EventCalender_proj.Shared.csproj",
+      "msbuildProject": "../Shared/EventCalender_proj.Shared.csproj"
+    }
+  },
+  "projectFileDependencyGroups": {
+    "net7.0": [
+      "EventCalender_proj.Client >= 1.0.0",
+      "EventCalender_proj.Shared >= 1.0.0",
+      "Microsoft.AspNetCore.Components.WebAssembly.Server >= 7.0.7"
+    ]
+  },
+  "packageFolders": {
+    "C:\\Users\\joseg\\.nuget\\packages\\": {},
+    "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages": {},
+    "C:\\Program Files (x86)\\Microsoft\\Xamarin\\NuGet\\": {}
+  },
+  "project": {
+    "version": "1.0.0",
+    "restore": {
+      "projectUniqueName": "C:\\Users\\joseg\\source\\repos\\EventCalender\\EventCalender_proj\\EventCalender_proj\\Server\\EventCalender_proj.Server.csproj",
+      "projectName": "EventCalender_proj.Server",
+      "projectPath": "C:\\Users\\joseg\\source\\repos\\EventCalender\\EventCalender_proj\\EventCalender_proj\\Server\\EventCalender_proj.Server.csproj",
+      "packagesPath": "C:\\Users\\joseg\\.nuget\\packages\\",
+      "outputPath": "C:\\Users\\joseg\\source\\repos\\EventCalender\\EventCalender_proj\\EventCalender_proj\\Server\\obj\\",
+      "projectStyle": "PackageReference",
+      "fallbackFolders": [
+        "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages",
+        "C:\\Program Files (x86)\\Microsoft\\Xamarin\\NuGet\\"
+      ],
+      "configFilePaths": [
+        "C:\\Users\\joseg\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
+        "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config",
+        "C:\\Program Files (x86)\\NuGet\\Config\\Xamarin.Offline.config"
+      ],
+      "originalTargetFrameworks": [
+        "net7.0"
+      ],
+      "sources": {
+        "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+        "C:\\Program Files\\dotnet\\sdk\\7.0.304\\Sdks\\Microsoft.NET.Sdk.Web\\library-packs": {}
+      },
+      "frameworks": {
+        "net7.0": {
+          "targetAlias": "net7.0",
+          "projectReferences": {
+            "C:\\Users\\joseg\\source\\repos\\EventCalender\\EventCalender_proj\\EventCalender_proj\\Client\\EventCalender_proj.Client.csproj": {
+              "projectPath": "C:\\Users\\joseg\\source\\repos\\EventCalender\\EventCalender_proj\\EventCalender_proj\\Client\\EventCalender_proj.Client.csproj"
+            },
+            "C:\\Users\\joseg\\source\\repos\\EventCalender\\EventCalender_proj\\EventCalender_proj\\Shared\\EventCalender_proj.Shared.csproj": {
+              "projectPath": "C:\\Users\\joseg\\source\\repos\\EventCalender\\EventCalender_proj\\EventCalender_proj\\Shared\\EventCalender_proj.Shared.csproj"
+            }
+          }
+        }
+      },
+      "warningProperties": {
+        "warnAsError": [
+          "NU1605"
+        ]
+      }
+    },
+    "frameworks": {
+      "net7.0": {
+        "targetAlias": "net7.0",
+        "dependencies": {
+          "Microsoft.AspNetCore.Components.WebAssembly.Server": {
+            "target": "Package",
+            "version": "[7.0.7, )"
+          }
+        },
+        "imports": [
+          "net461",
+          "net462",
+          "net47",
+          "net471",
+          "net472",
+          "net48",
+          "net481"
+        ],
+        "assetTargetFallback": true,
+        "warn": true,
+        "frameworkReferences": {
+          "Microsoft.AspNetCore.App": {
+            "privateAssets": "none"
+          },
+          "Microsoft.NETCore.App": {
+            "privateAssets": "all"
+          }
+        },
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.304\\RuntimeIdentifierGraph.json"
+      }
+    }
+  },
+  "logs": [
+    {
+      "code": "NU1101",
+      "level": "Error",
+      "message": "Unable to find package Microsoft.AspNetCore.Components.WebAssembly.Server. No packages exist with this id in source(s): C:\\Program Files\\dotnet\\sdk\\7.0.304\\Sdks\\Microsoft.NET.Sdk.Web\\library-packs, Microsoft Visual Studio Offline Packages",
+      "libraryId": "Microsoft.AspNetCore.Components.WebAssembly.Server",
+      "targetGraphs": [
+        "net7.0"
+      ]
+    },
+    {
+      "code": "NU1101",
+      "level": "Error",
+      "message": "Unable to find package Microsoft.AspNetCore.Components.WebAssembly. No packages exist with this id in source(s): C:\\Program Files\\dotnet\\sdk\\7.0.304\\Sdks\\Microsoft.NET.Sdk.Web\\library-packs, Microsoft Visual Studio Offline Packages",
+      "libraryId": "Microsoft.AspNetCore.Components.WebAssembly",
+      "targetGraphs": [
+        "net7.0"
+      ]
+    }
+  ]
+}
