@@ -1,0 +1,3 @@
+﻿<Project>
+  <Import Project="..\build\EventCalender_proj.Client.props" />
+</Project>

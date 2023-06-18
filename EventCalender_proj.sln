@@ -3,11 +3,11 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.6.33801.468
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EventCalender_proj.Server", "EventCalender_proj\Server\EventCalender_proj.Server.csproj", "{E4950983-4013-49FB-86E9-1D2F17CA1B2C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EventCalender_proj.Server", "EventCalender_proj\Server\EventCalender_proj.Server.csproj", "{E4950983-4013-49FB-86E9-1D2F17CA1B2C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EventCalender_proj.Client", "EventCalender_proj\Client\EventCalender_proj.Client.csproj", "{34869E36-33ED-413E-9C77-954366B850F1}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EventCalender_proj.Client", "EventCalender_proj\Client\EventCalender_proj.Client.csproj", "{34869E36-33ED-413E-9C77-954366B850F1}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EventCalender_proj.Shared", "EventCalender_proj\Shared\EventCalender_proj.Shared.csproj", "{5DB7A5D2-A672-4649-B381-0B37A66785A1}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EventCalender_proj.Shared", "EventCalender_proj\Shared\EventCalender_proj.Shared.csproj", "{5DB7A5D2-A672-4649-B381-0B37A66785A1}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

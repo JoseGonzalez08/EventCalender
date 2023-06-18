@@ -1,0 +1,12 @@
+C:\Users\joseg\source\repos\EventCalender\EventCalender_proj\EventCalender_proj\Shared\bin\Debug\net7.0\EventCalender_proj.Shared.deps.json
+C:\Users\joseg\source\repos\EventCalender\EventCalender_proj\EventCalender_proj\Shared\bin\Debug\net7.0\EventCalender_proj.Shared.dll
+C:\Users\joseg\source\repos\EventCalender\EventCalender_proj\EventCalender_proj\Shared\bin\Debug\net7.0\EventCalender_proj.Shared.pdb
+C:\Users\joseg\source\repos\EventCalender\EventCalender_proj\EventCalender_proj\Shared\obj\Debug\net7.0\EventCalender_proj.Shared.csproj.AssemblyReference.cache
+C:\Users\joseg\source\repos\EventCalender\EventCalender_proj\EventCalender_proj\Shared\obj\Debug\net7.0\EventCalender_proj.Shared.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\joseg\source\repos\EventCalender\EventCalender_proj\EventCalender_proj\Shared\obj\Debug\net7.0\EventCalender_proj.Shared.AssemblyInfoInputs.cache
+C:\Users\joseg\source\repos\EventCalender\EventCalender_proj\EventCalender_proj\Shared\obj\Debug\net7.0\EventCalender_proj.Shared.AssemblyInfo.cs
+C:\Users\joseg\source\repos\EventCalender\EventCalender_proj\EventCalender_proj\Shared\obj\Debug\net7.0\EventCalender_proj.Shared.csproj.CoreCompileInputs.cache
+C:\Users\joseg\source\repos\EventCalender\EventCalender_proj\EventCalender_proj\Shared\obj\Debug\net7.0\EventCalender_proj.Shared.dll
+C:\Users\joseg\source\repos\EventCalender\EventCalender_proj\EventCalender_proj\Shared\obj\Debug\net7.0\refint\EventCalender_proj.Shared.dll
+C:\Users\joseg\source\repos\EventCalender\EventCalender_proj\EventCalender_proj\Shared\obj\Debug\net7.0\EventCalender_proj.Shared.pdb
+C:\Users\joseg\source\repos\EventCalender\EventCalender_proj\EventCalender_proj\Shared\obj\Debug\net7.0\ref\EventCalender_proj.Shared.dll
