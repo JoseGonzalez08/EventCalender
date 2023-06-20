@@ -32,8 +32,8 @@ build_metadata.AdditionalFiles.CssScope =
 build_metadata.AdditionalFiles.TargetPath = UGFnZXNcSW5kZXgucmF6b3I=
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/joseg/source/repos/EventCalender/EventCalender_proj/EventCalender_proj/Client/Shared/CalenderView.razor]
-build_metadata.AdditionalFiles.TargetPath = U2hhcmVkXENhbGVuZGVyVmlldy5yYXpvcg==
+[C:/Users/joseg/source/repos/EventCalender/EventCalender_proj/EventCalender_proj/Client/Shared/EventCalendar.razor]
+build_metadata.AdditionalFiles.TargetPath = U2hhcmVkXEV2ZW50Q2FsZW5kYXIucmF6b3I=
 build_metadata.AdditionalFiles.CssScope = 
 
 [C:/Users/joseg/source/repos/EventCalender/EventCalender_proj/EventCalender_proj/Client/Shared/SurveyPrompt.razor]

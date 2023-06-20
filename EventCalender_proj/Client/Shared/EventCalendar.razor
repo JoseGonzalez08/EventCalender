@@ -1,0 +1,260 @@
+﻿@using EventCalender_proj.Client.Shared.Models;
+@using MudBlazor
+
+<style type="text/css">
+    #divParent {
+        position: relative;
+    }
+
+    #divModal {
+        z-index: 10;
+        position: absolute;
+        border: 1px solid #000000;
+        border-radius: 3px;
+        background-color: #ffffff;
+        left: 40%;
+        top: 20%;
+        width: 24%;
+        min-height: 30%;
+    }
+
+    .modalHeading {
+        text-alight: center;
+        font-size: 50px;
+        text-decoration: underline;
+        margin-bottom: 36px;
+    }
+</style>
+
+@if (displayModal)
+{
+    <div id="divModal">
+        <div class="container">
+            <div Class="panel panel-default">
+                <div class="panel-heading modalHeading">Event</div>
+                <div class="row">
+                    <div class="col-md-4">
+                        <label>Name: </label>
+                    </div>
+                    <div class="col-md-6">
+                        <input type="text" placeholder="Event" />
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-4">
+                        <label>Date: </label>
+                    </div>
+                    <div class="col-md-6">
+                        <input type="date" style="width:100%;" />
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-4">
+                        <label>Date: </label>
+                    </div>
+                    <div class="col-md-6">
+                        <input type="time" style="width:100%;" />
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-4">
+                        <label>Description: </label>
+                    </div>
+                    <div class="col-md-8">
+                        <input type="text" placeholder="Type here.." />
+                    </div>
+                </div>
+                <div class="row" style="margin-bottom: 10px;">
+                    <div class="col-md-4"></div>
+                    <div class="col-md-8" style="text-align:right;">
+                        <button class="btn btn-success" stylle="display: inline-block; margin-right:5px;">Save</button>
+                        <button class="btn btn-danger" @onclick="CloseModal" stylle="display: inline-block;">Close</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+}
+
+<select @onchange="LoadCalender">
+    <!-- Loop through monthNames and create an <option> element for each month -->
+    @foreach (string monthName in monthNames)
+    {
+        <option> @monthName</option>
+    }
+</select>
+<table class="table tables-bordered table-striped">
+    <thead>
+        <tr>
+
+            <!-- Loop through Day array and create a <th> element for each day -->
+            @for (var dayIndex = 0; dayIndex < Day.Count(); dayIndex++)
+            {
+                <th>
+                    @Day[dayIndex]
+                </th>
+            }
+        </tr>
+    </thead>
+    <tbody>
+        <!-- Loop through weeks array -->
+        @for (var weekIndex = 0; weekIndex < weeks.Count(); weekIndex++)
+        {
+            <tr>
+                <!-- Loop through Dates array in the current week -->
+                @for (var dayIndex = 0; dayIndex < weeks[weekIndex].Dates.Count(); dayIndex++)
+                {
+                    var wkIndex = weekIndex;
+                    var dyIndex = dayIndex;
+
+                    <td @ondblclick="@(()=>OpenModal(wkIndex,dyIndex))">
+                        <!-- Display the DateValue for the current cell -->
+                @weeks[weekIndex].Dates[dayIndex].DateValue
+                        <br><br>
+                        <!-- Display the Note for the current cell with specific style -->
+                        <label style="color:#c00; font-weight: bold">@weeks[weekIndex].Dates[dayIndex].Note</label>
+
+                        <!-- Display the cell number in the format [weekIndex, dayIndex] -->
+                        Cell Number : [@weekIndex, @dayIndex]
+                    </td>
+                }
+            </tr>
+        }
+    </tbody>
+</table>
+@code {
+    bool displayModal = false; //Declare and initialize a boolean variable named displayModal with the initial value of false
+    List<String> monthNames = new List<string>();//Stores the names of the months
+    List<String> Day = new List<string>();//Stores the days of the month
+    List<WeekClass> weeks = new List<WeekClass>(); //Represents the weeks of the month
+    DateTime StartDate = new DateTime(DateTime.Now.Year, DateTime.Now.Month, 1); //Gets the current year and month as the start date
+    DateTime EndDate = (new DateTime(DateTime.Now.Year, DateTime.Now.Month, 1)).AddMonths(1).AddDays(-1); //Gets the last day of the current month
+
+    protected override void OnInitialized()
+    {
+        //Get the month names from the current culture's DateTimeFormat and convert it to a list
+        monthNames = System.Globalization.CultureInfo.CurrentCulture.DateTimeFormat.MonthGenitiveNames.ToList();
+
+        //Call the methods to generate the calendar head and body
+        GenerateCalenderHead();
+        GenerateCalenderBody();
+    }
+
+
+    public void LoadCalender(ChangeEventArgs e)
+    {
+        //Get the selected month from the event arguments and convert it to a string
+        var month = e.Value.ToString();
+
+        //Parse the selected month string into a DateTime object, assuming the format is "MMMM"  ("June")
+        int monthIndex = DateTime.ParseExact(month, "MMMM", System.Globalization.CultureInfo.CreateSpecificCulture("en-GB")).Month;
+
+        //Set the StartDate to the first day of the selected month, using the current year
+        StartDate = new DateTime(DateTime.Now.Year, monthIndex, 1);
+
+        // Set the EndDate to the last day of the selected month, using the current year
+        EndDate = (new DateTime(DateTime.Now.Year, monthIndex, 1)).AddMonths(1).AddDays(-1);
+
+        // Call the methods to generate the calendar head and body
+        GenerateCalenderHead();
+        GenerateCalenderBody();
+    }
+
+    public void GenerateCalenderHead()
+    {
+        //Here We Create a new list to store the day names
+        var day1 = new List<string>();
+
+        //This will Loop through the dates from StartDate to EndDate, incrementing one day
+        for (var date = StartDate; date <= EndDate; date = date.AddDays(1))
+        {
+            //This Add the day of the week (in string format) to the day1 list
+            day1.Add(date.ToString("dddd"));
+        }
+
+        //Here we will Remove the duplicates from the day1 list and convert it to a distinct list of days
+        Day = day1.Distinct().ToList();
+    }
+
+    public void GenerateCalenderBody()
+    {
+        // Create a new list to store the weeks of the calendar
+        weeks = new List<WeekClass>();
+
+        // Initialize a flag to keep track of the days in a week
+        int flag = 0;
+
+        // Create a new WeekClass instance to represent a week
+        WeekClass week = new WeekClass();
+
+        // Create a new list to store the day events within a week
+        List<DayEvent> dates = new List<DayEvent>();
+
+        // Calculate the total number of days between StartDate and EndDate
+        var totalDays = (int)(EndDate - StartDate).TotalDays;
+
+        // Initialize a counter to track the number of processed days
+        int countdays = 0;
+
+        // Loop through each date from StartDate to EndDate
+        for (var date = StartDate; date <= EndDate; date = date.AddDays(1))
+        {
+            // Increment the flag to count the days within a week
+            flag++;
+
+            // Create a new DayEvent instance for the current date and add it to the dates list
+            dates.Add(new DayEvent()
+                {
+                    DateValue = date.ToString("dd-MMM-yyyy"),// Format the date as "dd-MMM-yyyy" (18-Jun-2023)
+                    DateName = date.ToString("dddd")// Get the day name of the date (Monday)
+                });
+
+            // Check if a week (7 days) is complete
+            if (flag == 7)
+            {
+                // Create a new WeekClass instance and assign the dates list to it
+                week = new WeekClass();
+                week.Dates = dates;
+
+                // Add the week to the weeks list
+                weeks.Add(week);
+
+                // Reset the dates list and the flag for the next week
+                dates = new List<DayEvent>();
+                flag = 0;
+            }
+
+            // Check if all the days have been processed
+            if (countdays == totalDays)
+            {
+                // Create a new WeekClass instance and assign the dates list to it
+                week = new WeekClass();
+                week.Dates = dates;
+
+                // Add the week to the weeks list
+                weeks.Add(week);
+
+                // Exit the loop since all the days have been processed
+                break;
+            }
+
+            // Increment the counter for the processed days
+            countdays++;
+        }
+    }
+
+    public void CloseModal()
+    {
+        // Set the displayModal variable to false, indicating that the modal should be closed
+        displayModal = false;
+    }
+
+    public void OpenModal(int wkIndex, int dyIndex)
+    {
+        // Set the displayModal variable to true, indicating that the modal should be opened
+        displayModal = true;
+    }
+
+
+}

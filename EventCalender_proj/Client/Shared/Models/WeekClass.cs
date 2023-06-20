@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace EventCalender_proj.Client.Shared
+namespace EventCalender_proj.Client.Shared.Models
 {
     public class WeekClass
     {

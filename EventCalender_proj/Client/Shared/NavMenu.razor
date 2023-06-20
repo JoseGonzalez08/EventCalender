@@ -1,10 +1,11 @@
 ﻿
 <MudNavMenu>
     <MudNavLink Href="/" Match="NavLinkMatch.All">Dashboard</MudNavLink>
-    <MudNavLink Href="/servers" Match="NavLinkMatch.Prefix">Servers</MudNavLink>
-    <MudNavGroup Title="Settings" Expanded="true">
-        <MudNavLink Href="/users" Match="NavLinkMatch.Prefix">Users</MudNavLink>
-        <MudNavLink Href="/security" Match="NavLinkMatch.Prefix">Security</MudNavLink>
+    <MudNavGroup Title="Events" Expanded="true">
+        <MudNavLink Href="/AddEvent" Match="NavLinkMatch.Prefix">Add Event</MudNavLink>
+        <MudNavLink Href="/EditEvent" Match="NavLinkMatch.Prefix">Edit Event</MudNavLink>
+        <MudNavLink Href="/SearchEvent" Match="NavLinkMatch.Prefix">Search Event</MudNavLink>
+        <MudNavLink Href="/DeleteEvent" Match="NavLinkMatch.Prefix">Delete Event</MudNavLink>
     </MudNavGroup>
     <MudNavLink Href="/about" Match="NavLinkMatch.Prefix">About</MudNavLink>
 </MudNavMenu>

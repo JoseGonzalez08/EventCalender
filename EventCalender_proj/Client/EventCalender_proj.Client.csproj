@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk.BlazorWebAssembly">
+﻿<Project Sdk="Microsoft.NET.Sdk.BlazorWebAssembly">
 
   <PropertyGroup>
     <TargetFramework>net7.0</TargetFramework>
@@ -11,25 +11,30 @@
     <Compile Remove="Pages\NewFolder\**" />
     <Compile Remove="Shared\NewFolder1\**" />
     <Compile Remove="Shared\NewFolder2\**" />
+    <Compile Remove="Shared\NewFolder3\**" />
     <Compile Remove="Shared\NewFolder\**" />
     <Content Remove="Pages\NewFolder1\**" />
     <Content Remove="Pages\NewFolder\**" />
     <Content Remove="Shared\NewFolder1\**" />
     <Content Remove="Shared\NewFolder2\**" />
+    <Content Remove="Shared\NewFolder3\**" />
     <Content Remove="Shared\NewFolder\**" />
     <EmbeddedResource Remove="Pages\NewFolder1\**" />
     <EmbeddedResource Remove="Pages\NewFolder\**" />
     <EmbeddedResource Remove="Shared\NewFolder1\**" />
     <EmbeddedResource Remove="Shared\NewFolder2\**" />
+    <EmbeddedResource Remove="Shared\NewFolder3\**" />
     <EmbeddedResource Remove="Shared\NewFolder\**" />
     <None Remove="Pages\NewFolder1\**" />
     <None Remove="Pages\NewFolder\**" />
     <None Remove="Shared\NewFolder1\**" />
     <None Remove="Shared\NewFolder2\**" />
+    <None Remove="Shared\NewFolder3\**" />
     <None Remove="Shared\NewFolder\**" />
   </ItemGroup>
 
   <ItemGroup>
+    <Content Remove="Shared\CalenderView.razor" />
     <Content Remove="Shared\Component.razor" />
   </ItemGroup>
 
