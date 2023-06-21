@@ -1,0 +1,39 @@
+﻿@using EventCalender_proj.Client.Shared;
+@using EventCalender_proj.Client.Shared.Models;
+@using EventCalender_proj.Client.Shared.Components;
+@inject HttpClient Http;
+
+<MudDialog>
+    <DialogContent>
+        <EventCard model="model"></EventCard>
+    </DialogContent>
+    <DialogActions>
+        <MudButton OnClick="Cancel">Cancel</MudButton>
+        <MudButton Color="Color.Primary" OnClick="Submit">Ok</MudButton>
+    </DialogActions>
+</MudDialog>
+@code {
+
+    [CascadingParameter] MudDialogInstance MudDialog { get; set; }
+
+    public EventClass model { get; set; }
+    private bool showEventCard = false; // Flag to control the display of the EventCard
+    private int eventId = 1; // The ID of the event you want to display
+
+    public async Task GetEventData(int id)
+    {
+        model = await Http.GetFromJsonAsync<EventClass>($"/api/event/{id}");
+    }
+    protected override async Task OnInitializedAsync()
+    {
+        await GetEventData(eventId);
+    }
+    // This method is called when the button is clicked
+    private void LoadEvent()
+    {
+        showEventCard = true;
+    }
+    void Submit() => MudDialog.Close(DialogResult.Ok(true));
+    void Cancel() => MudDialog.Cancel();
+
+}

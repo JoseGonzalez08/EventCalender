@@ -1,82 +1,13 @@
-﻿@using EventCalender_proj.Client.Shared.Models;
-@using MudBlazor
+﻿@using EventCalender_proj.Client.Shared.Components;
+@using EventCalender_proj.Client.Shared.Models;
+@using MudBlazor;
+@using MudBlazor.Services;
+@inject IDialogService DialogService;
 
-<style type="text/css">
-    #divParent {
-        position: relative;
-    }
 
-    #divModal {
-        z-index: 10;
-        position: absolute;
-        border: 1px solid #000000;
-        border-radius: 3px;
-        background-color: #ffffff;
-        left: 40%;
-        top: 20%;
-        width: 24%;
-        min-height: 30%;
-    }
-
-    .modalHeading {
-        text-alight: center;
-        font-size: 50px;
-        text-decoration: underline;
-        margin-bottom: 36px;
-    }
-</style>
-
-@if (displayModal)
-{
-    <div id="divModal">
-        <div class="container">
-            <div Class="panel panel-default">
-                <div class="panel-heading modalHeading">Event</div>
-                <div class="row">
-                    <div class="col-md-4">
-                        <label>Name: </label>
-                    </div>
-                    <div class="col-md-6">
-                        <input type="text" placeholder="Event" />
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-md-4">
-                        <label>Date: </label>
-                    </div>
-                    <div class="col-md-6">
-                        <input type="date" style="width:100%;" />
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-md-4">
-                        <label>Date: </label>
-                    </div>
-                    <div class="col-md-6">
-                        <input type="time" style="width:100%;" />
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-md-4">
-                        <label>Description: </label>
-                    </div>
-                    <div class="col-md-8">
-                        <input type="text" placeholder="Type here.." />
-                    </div>
-                </div>
-                <div class="row" style="margin-bottom: 10px;">
-                    <div class="col-md-4"></div>
-                    <div class="col-md-8" style="text-align:right;">
-                        <button class="btn btn-success" stylle="display: inline-block; margin-right:5px;">Save</button>
-                        <button class="btn btn-danger" @onclick="CloseModal" stylle="display: inline-block;">Close</button>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-
-}
-
+@*<MudButton @onclick="OpenModal" Variant="Variant.Filled" Color="Color.Primary">
+    Open Simple Dialog
+</MudButton>*@
 <select @onchange="LoadCalender">
     <!-- Loop through monthNames and create an <option> element for each month -->
     @foreach (string monthName in monthNames)
@@ -84,6 +15,7 @@
         <option> @monthName</option>
     }
 </select>
+
 <table class="table tables-bordered table-striped">
     <thead>
         <tr>
@@ -108,22 +40,22 @@
                     var wkIndex = weekIndex;
                     var dyIndex = dayIndex;
 
-                    <td @ondblclick="@(()=>OpenModal(wkIndex,dyIndex))">
+                    <td @ondblclick="@(()=>OpenModal())">
                         <!-- Display the DateValue for the current cell -->
-                @weeks[weekIndex].Dates[dayIndex].DateValue
+                        @weeks[weekIndex].Dates[dayIndex].DateValue
                         <br><br>
                         <!-- Display the Note for the current cell with specific style -->
                         <label style="color:#c00; font-weight: bold">@weeks[weekIndex].Dates[dayIndex].Note</label>
 
                         <!-- Display the cell number in the format [weekIndex, dayIndex] -->
-                        Cell Number : [@weekIndex, @dayIndex]
+                        @*Cell Number : [@weekIndex, @dayIndex]*@
                     </td>
                 }
             </tr>
         }
     </tbody>
 </table>
-@code {
+@code{
     bool displayModal = false; //Declare and initialize a boolean variable named displayModal with the initial value of false
     List<String> monthNames = new List<string>();//Stores the names of the months
     List<String> Day = new List<string>();//Stores the days of the month
@@ -244,16 +176,11 @@
         }
     }
 
-    public void CloseModal()
+    public void OpenModal()
     {
-        // Set the displayModal variable to false, indicating that the modal should be closed
-        displayModal = false;
-    }
-
-    public void OpenModal(int wkIndex, int dyIndex)
-    {
-        // Set the displayModal variable to true, indicating that the modal should be opened
-        displayModal = true;
+        // retrieve the date information or any other necessary data from the clicked cell
+        var options = new DialogOptions { CloseOnEscapeKey = true };
+        DialogService.Show<EventDialogt>("Event", options);
     }
 
 

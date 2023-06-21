@@ -32,8 +32,20 @@ build_metadata.AdditionalFiles.CssScope =
 build_metadata.AdditionalFiles.TargetPath = UGFnZXNcSW5kZXgucmF6b3I=
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/joseg/source/repos/EventCalender/EventCalender_proj/EventCalender_proj/Client/Shared/Components/ModalComponent.razor]
-build_metadata.AdditionalFiles.TargetPath = U2hhcmVkXENvbXBvbmVudHNcTW9kYWxDb21wb25lbnQucmF6b3I=
+[C:/Users/joseg/source/repos/EventCalender/EventCalender_proj/EventCalender_proj/Client/Shared/Components/AddEventComponent.razor]
+build_metadata.AdditionalFiles.TargetPath = U2hhcmVkXENvbXBvbmVudHNcQWRkRXZlbnRDb21wb25lbnQucmF6b3I=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/joseg/source/repos/EventCalender/EventCalender_proj/EventCalender_proj/Client/Shared/Components/AddEventDialog.razor]
+build_metadata.AdditionalFiles.TargetPath = U2hhcmVkXENvbXBvbmVudHNcQWRkRXZlbnREaWFsb2cucmF6b3I=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/joseg/source/repos/EventCalender/EventCalender_proj/EventCalender_proj/Client/Shared/Components/EventCard.razor]
+build_metadata.AdditionalFiles.TargetPath = U2hhcmVkXENvbXBvbmVudHNcRXZlbnRDYXJkLnJhem9y
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/joseg/source/repos/EventCalender/EventCalender_proj/EventCalender_proj/Client/Shared/Components/EventDialogt.razor]
+build_metadata.AdditionalFiles.TargetPath = U2hhcmVkXENvbXBvbmVudHNcRXZlbnREaWFsb2d0LnJhem9y
 build_metadata.AdditionalFiles.CssScope = 
 
 [C:/Users/joseg/source/repos/EventCalender/EventCalender_proj/EventCalender_proj/Client/Shared/EventCalendar.razor]

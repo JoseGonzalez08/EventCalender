@@ -58,7 +58,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <None Include="Shared\Components\ModalComponent.razor" />
+    <None Include="Shared\Components\EventCard.razor" />
   </ItemGroup>
 
 </Project>

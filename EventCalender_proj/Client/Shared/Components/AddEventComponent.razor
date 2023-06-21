@@ -1,0 +1,44 @@
+﻿@page "/AddEventComponent"
+@using MudBlazor
+@using EventCalender_proj.Client.Shared;
+@using EventCalender_proj.Client.Shared.Models;
+@using EventCalender_proj.Client.Shared.Components;
+@inject HttpClient Http;
+
+<MudForm>
+    <MudTextField Label="Name" @bind-Value="@name" Variant="Variant.Text" />
+    <MudDatePicker Label="Date" @bind-Date="@date" />
+    <MudTextField Label="Description" @bind-Value="@description" Variant="Variant.Text" />
+    <MudButton ButtonType="ButtonType.Submit" OnClick="Submit">Submit</MudButton>
+
+</MudForm>
+
+@code {
+    DateTime? date;
+    string description;
+    string name;
+    public EventClass model { get; set; }
+
+    public async Task InsertEventData()
+    {
+
+
+        // If date is null, use current date time.
+        DateTime dateValue = date ?? DateTime.Now;
+
+        // Create a new EventClass instance from the form data
+        model = new EventClass
+        {
+            DateTime = dateValue,
+            Description = description,
+            Name = name
+        };
+        // Send a POST request to the API endpoint
+        await Http.PostAsJsonAsync("/api/event", model);
+     }
+    void Submit()
+    {
+        // Call InsertEventData when the Submit button is clicked
+        InsertEventData();
+    }
+}
