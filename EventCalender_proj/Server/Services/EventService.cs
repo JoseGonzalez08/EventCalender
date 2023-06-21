@@ -4,6 +4,8 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using EventCalender_proj.Server.Services;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Http.HttpResults;
+using System.Linq;
 
 namespace EventCalender_proj.Server.Services
 {
@@ -13,8 +15,13 @@ namespace EventCalender_proj.Server.Services
         Task<EventClass> GetEventClassAsync(int id);// Interface for the event service with a method to retrieve an event by ID asynchronously
         Task<List<EventClass>> GetEventsAsync();// Interface for the event service with a method to retrieve multiple events asynchronously
         Task<EventClass> InsertEventAsync(EventClass eventInsertId); // New method to insert an event
+        Task<EventClass> UpdateEventAsync(int id, EventClass updatedEvent); // Method to update an event asynchronously
+        Task<bool> DeleteEventAsync(int id); // Method to delete an event by ID asynchronously
 
     }
+
+
+}
 
     public class EventService : IEventService
     {
@@ -69,7 +76,40 @@ namespace EventCalender_proj.Server.Services
 
             return newId;
         }
+        public async Task<EventClass> UpdateEventAsync(int id, EventClass updatedEvent)
+        {
+            var existingEvent = await GetEventClassAsync(id);// Find the existing event
 
-    }
+            // If the event with the specified ID doesn't exist, return null
+            if (existingEvent == null)
+            {
+                return null;
+            }
+
+            // Update the properties of the existing event
+            existingEvent.Name = updatedEvent.Name;
+            existingEvent.Description = updatedEvent.Description;
+
+            // Add this line to update the DateTime property
+            existingEvent.DateTime = updatedEvent.DateTime;
+
+            // Return the updated event
+            return updatedEvent;
+        }
+        public async Task<bool> DeleteEventAsync(int id)
+        {
+        var deleteEvent = await GetEventClassAsync(id); ; //Find the Existing event
+
+            // If the event with the specified ID doesn't exist, return null
+            if (deleteEvent != null)
+            {
+                Events.Remove(deleteEvent);//remove the events from the Events list 
+                return true; //return true if deletion was successful
+            }   
+            return false; //return false if the even was not found
+            
+
+        }
 }
+
 

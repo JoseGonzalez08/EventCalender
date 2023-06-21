@@ -14,6 +14,7 @@ namespace EventCalender_proj.Server.Controllers
     public class EventController : ControllerBase
     {
         private readonly IEventService _eventService;
+        private bool result;
 
         // Constructor injection: The controller requires an implementation of IEventService
         public EventController(IEventService eventService)
@@ -58,8 +59,33 @@ namespace EventCalender_proj.Server.Controllers
             // Return the inserted event
             return insertedEvent;
         }
+        [HttpPut("{id}")] // HTTP PUT endpoint to update an event by ID
+        public async Task<ActionResult<EventClass>> UpdateEvent(int id, EventClass updatedEvent)
+        {
+            var UpdatedEvent = await _eventService.UpdateEventAsync(id, updatedEvent);
 
-        // inserting an event, updating an event, and deleting an event can be added here
+            // If the event with the specified ID doesn't exist, return a 404 Not Found response
+            if (updatedEvent == null)
+            {
+                return NotFound();
+            }
+
+            // Return the updated event
+            return updatedEvent;
+        }
+        [HttpDelete("{id}")] // HTTP PUT endpoint to update an event by ID
+        public async Task<ActionResult<EventClass>> DeleteEvent(int id)
+        {
+            var deleteEvent = await _eventService.DeleteEventAsync(id);
+
+            if (deleteEvent)
+            {
+                return Ok(true); // Return true if the event is successfully deleted
+            }
+
+            return NotFound(); // Return a 404 Not Found response if the event is not found
+        }
+        // and deleting an event can be added here
     }
 }
 

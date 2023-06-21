@@ -36,6 +36,7 @@
   <ItemGroup>
     <Content Remove="Shared\CalenderView.razor" />
     <Content Remove="Shared\Component.razor" />
+    <Content Remove="Shared\ModalComponent.razor" />
   </ItemGroup>
 
   <ItemGroup>
@@ -46,6 +47,18 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Shared\EventCalender_proj.Shared.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <UpToDateCheckInput Remove="Shared\ModalComponent.razor" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <_ContentIncludedByDefault Remove="Shared\ModalComponent.razor" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="Shared\Components\ModalComponent.razor" />
   </ItemGroup>
 
 </Project>
