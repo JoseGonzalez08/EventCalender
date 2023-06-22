@@ -16,32 +16,35 @@
         <MudButton Color="Color.Primary" Variant="Variant.Outlined" OnClick="() => EditEvent()">Edit</MudButton>
     </MudCardActions>
 </MudCard>
+
 @code {
-    [Parameter]
-    public EventClass model { get; set; }
+        [Parameter]
+        public EventClass model { get; set; }
 
-    private async Task DeleteEvent()
-    {
-        // Make the API call to delete the event
-        var response = await Http.DeleteAsync($"/api/event/{model.Id}");
-
-        if (response.IsSuccessStatusCode)
+        // Method to delete an event
+        private async Task DeleteEvent()
         {
-            // Show a dialog or some other notification to let the user know that the event was deleted successfully
-            DialogService.ShowMessageBox("Success", "The event has been deleted successfully.");
-        }
-        else
-        {
-            // Show an error message
-            DialogService.ShowMessageBox("Error", "An error occurred while trying to delete the event.");
-        }
-    }
-    private void EditEvent()
-    {
-        var parameters = new DialogParameters();
-        parameters.Add("Event", model);
-        var options = new DialogOptions() { CloseButton = true, MaxWidth = MaxWidth.ExtraSmall };
-        DialogService.Show<EditEventDialog>("Edit Event", parameters, options);
-    }
+            // Make the API call to delete the event
+            var response = await Http.DeleteAsync($"/api/event/{model.Id}");
 
+            if (response.IsSuccessStatusCode)
+            {
+                // Show a dialog or some other notification to let the user know that the event was deleted successfully
+                DialogService.ShowMessageBox("Success", "The event has been deleted successfully.");
+            }
+            else
+            {
+                // Show an error message
+                DialogService.ShowMessageBox("Error", "An error occurred while trying to delete the event.");
+            }
+        }
+
+        // Method to edit an event
+        private void EditEvent()
+        {
+            var parameters = new DialogParameters();
+            parameters.Add("Event", model);
+            var options = new DialogOptions() { CloseButton = true, MaxWidth = MaxWidth.ExtraSmall };
+            DialogService.Show<EditEventDialog>("Edit Event", parameters, options);
+        }
 }

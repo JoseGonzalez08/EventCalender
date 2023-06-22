@@ -200,14 +200,14 @@
       "netstandard.dll": "sha256-IEYNogoWZgSKXlx0+Pn2bt3irEZ1nuCnjK9Bm+3OWYw=",
       "System.Private.CoreLib.dll": "sha256-XrgDwG5fUErLSziY3dAwA0PYLIirTlornT8Lb6U2DUs=",
       "EventCalender_proj.Shared.dll": "sha256-thGeOybgwHfYkpJD31PYaMY4BUHrQf6bQZLdOXwbJJA=",
-      "EventCalender_proj.Client.dll": "sha256-GWXvnhbLbR0hC\/Ih3ATfloT76fIGqL9NemYr4HMyVIs="
+      "EventCalender_proj.Client.dll": "sha256-IvlFnfCyDHopyJWJ56TwdAcXmUQe1JBaz7ucIJVEfO0="
     },
     "extensions": null,
     "lazyAssembly": null,
     "libraryInitializers": null,
     "pdb": {
       "EventCalender_proj.Shared.pdb": "sha256-29Ve5MmbYzhqah7R9eTccmHvmU3k63rRs6eQnXx2JmA=",
-      "EventCalender_proj.Client.pdb": "sha256-KG8wT0YG9J4RmwKWG593+MMn74R82te6zX67y6dZlO0="
+      "EventCalender_proj.Client.pdb": "sha256-tRRWdjvG8C1vSu0ScQcM+61wcNx7Rvm5a1+uS7Qj+wo="
     },
     "runtime": {
       "dotnet.7.0.7.yq74o9rayf.js": "sha256-JmMF+3r0RjsO0yYBfDP8Pq2ahxBSJHFu7mZNB9lqLsw=",

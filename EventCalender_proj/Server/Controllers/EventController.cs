@@ -85,7 +85,6 @@ namespace EventCalender_proj.Server.Controllers
 
             return NotFound(); // Return a 404 Not Found response if the event is not found
         }
-        // and deleting an event can be added here
     }
 }
 

@@ -16,23 +16,33 @@
         <MudButton Color="Color.Primary" OnClick="Submit">Submit</MudButton>
     </DialogActions>
 </MudDialog>
+
 @code {
+    // Cascading parameter to access the dialog instance
     [CascadingParameter] MudDialogInstance MudDialog { get; set; }
 
+    // Parameter to receive the event data
     [Parameter] public EventClass Event { get; set; }
 
+    // Method to cancel and close the dialog
     void Cancel() => MudDialog.Cancel();
 
+    // Method to submit the changes to the event
     async void Submit()
     {
+        // Make the API call to update the event
         var response = await Http.PutAsJsonAsync($"/api/event/{Event.Id}", Event);
+
         if (response.IsSuccessStatusCode)
         {
+            // Close the dialog and indicate success
             MudDialog.Close(DialogResult.Ok(true));
         }
         else
         {
-            Console.Write("the Event Was not changed, unexpected error occured.");// handle error
+            // Handle the error, display a message, or take appropriate action
+            Console.Write("The event was not changed. An unexpected error occurred.");
         }
     }
 }
+

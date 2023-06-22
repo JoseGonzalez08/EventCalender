@@ -12,18 +12,22 @@
         <MudButton OnClick="Cancel">Cancel</MudButton>
     </DialogActions>
 </MudDialog>
-@code {
 
+@code {
+    // Cascading parameter to access the dialog instance
     [CascadingParameter] MudDialogInstance MudDialog { get; set; }
+
+    // Properties to store the form data
     DateTime? date;
     string description;
     string name;
+
+    // Property to store the created event
     public EventClass model { get; set; }
 
+    // Method to insert event data into the database
     public async Task InsertEventData()
     {
-
-
         // If date is null, use current date time.
         DateTime dateValue = date ?? DateTime.Now;
 
@@ -34,14 +38,21 @@
                 Description = description,
                 Name = name
             };
-        // Send a POST request to the API endpoint
+
+        // Send a POST request to the API endpoint to insert the event data
         await Http.PostAsJsonAsync("/api/event", model);
     }
+
+    // Method to handle the submit button click
     async void Submit()
     {
-        // Call InsertEventData when the Submit button is clicked
+        // Call InsertEventData to insert the event data
         InsertEventData();
+
+        // Close the dialog and pass the created event as the result
         MudDialog.Close(DialogResult.Ok(model));
     }
+
+    // Method to handle the cancel button click
     void Cancel() => MudDialog.Cancel();
 }

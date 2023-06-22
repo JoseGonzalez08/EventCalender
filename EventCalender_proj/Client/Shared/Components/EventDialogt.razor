@@ -15,6 +15,7 @@
         <MudButton Color="Color.Primary" OnClick="Submit">Ok</MudButton>
     </DialogActions>
 </MudDialog>
+
 @code {
 
     [CascadingParameter] MudDialogInstance MudDialog { get; set; }
@@ -23,8 +24,7 @@
 
     public EventClass model { get; set; }
     List<EventClass> events = new List<EventClass>();
-    private bool showEventCard = false; // Flag to control the display of the EventCard
-    private int eventId = 1; // The ID of the event you want to display
+    //private bool showEventCard = false; // Flag to control the display of the EventCard
     private DateTime clickedDate;
 
 
@@ -44,22 +44,11 @@
         await GetEventsByDate(SelectedDate);
     }
 
-    //public async task geteventdata(int id)
+ 
+    //private void LoadEvent()
     //{
-    //    model = await http.getfromjsonasync<eventclass>($"/api/event/{id}");
+    //    showEventCard = true;
     //}
-    //protected override async task oninitializedasync()
-    //{
-
-    //    clickeddate = datetime.today; // initialize the clickeddate property with today's date
-    //    await geteventsbydate(clickeddate);
-    //}
-
-    // This method is called when the button is clicked
-    private void LoadEvent()
-    {
-        showEventCard = true;
-    }
     void Submit() => MudDialog.Close(DialogResult.Ok(true));
     void Cancel() => MudDialog.Cancel();
 

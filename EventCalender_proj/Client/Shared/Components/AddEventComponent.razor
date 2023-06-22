@@ -14,31 +14,37 @@
 </MudForm>
 
 @code {
+    // Properties to store form data
     DateTime? date;
     string description;
     string name;
+
+    // Property to store the created event
     public EventClass model { get; set; }
 
+    // Method to insert event data into the database
     public async Task InsertEventData()
     {
-
-
         // If date is null, use current date time.
         DateTime dateValue = date ?? DateTime.Now;
 
         // Create a new EventClass instance from the form data
         model = new EventClass
-        {
-            DateTime = dateValue,
-            Description = description,
-            Name = name
-        };
-        // Send a POST request to the API endpoint
+            {
+                DateTime = dateValue,
+                Description = description,
+                Name = name
+            };
+
+        // Send a POST request to the API endpoint to insert the event data
         await Http.PostAsJsonAsync("/api/event", model);
-     }
+    }
+
+    // Method to handle the submit button click
     void Submit()
     {
-        // Call InsertEventData when the Submit button is clicked
+        // Call InsertEventData to insert the event data
         InsertEventData();
     }
 }
+

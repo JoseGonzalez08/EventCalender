@@ -19,7 +19,6 @@
 
 </div>
 
-
 <MudTable Items="@calendar" Breakpoint="Breakpoint.Sm">
     <HeaderContent>
         <MudTh></MudTh>
@@ -47,6 +46,7 @@
         }
     </RowTemplate>
 </MudTable>
+
 <style>
     .boxed-cell {
         border: 1px solid #ccc;
@@ -98,7 +98,6 @@
 
     void GenerateCalendar()
     {
-        // clear out the old calendar
         calendar = new List<int[]>();
         int daysInMonth = DateTime.DaysInMonth(currentMonth.Year, currentMonth.Month);
         int startDayOfWeek = (int)new DateTime(currentMonth.Year, currentMonth.Month, 1).DayOfWeek;
@@ -156,7 +155,7 @@
             var parameters = new DialogParameters();
             parameters.Add("SelectedDate", selectedDate);
 
-            var dialog = DialogService.Show<EventDialogt>("Event Dialog", parameters);
+            var dialog = DialogService.Show<EventDialogt>("Events", parameters);
             var result = await dialog.Result;
         }
     }
