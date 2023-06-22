@@ -7,6 +7,9 @@
         public string Name { get; set; }
         public string Description { get; set; }
 
+        public int Year => DateTime?.Year ??0;
+        public int Month => DateTime?.Month??0;
+
 
     }
 

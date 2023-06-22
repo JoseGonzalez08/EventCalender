@@ -8,15 +8,15 @@
 @inject HttpClient Http
 
 <div class="controls" style="display: flex; justify-content: flex-end; gap: 1%;">
-    <MudSelect T="string" Label="Select Month" @bind-Value="@selectedMonth" Variant="Variant.Outlined" Dense="true">
+    <MudSelect T="string" Label="Select Month" Value="@selectedMonth" ValueChanged="OnMonthChange" Variant="Variant.Outlined" Dense="true" Immediate="true">
         @foreach (var month in CultureInfo.CurrentCulture.DateTimeFormat.MonthNames.Where(m => !string.IsNullOrEmpty(m)))
         {
             <MudSelectItem Value="@month">@month</MudSelectItem>
         }
     </MudSelect>
 
-    <MudNumericField T="int" Label="Year" @bind-Value="@selectedYear" Variant="Variant.Outlined" Dense="true" />
-    <MudButton Color="Color.Primary" Variant="Variant.Filled" OnClick="UpdateMonth">Update</MudButton>
+    <MudNumericField T="int" Label="Year" Value="@selectedYear" ValueChanged="OnYearChange" Immediate="true" Variant="Variant.Outlined" Dense="true" />
+
 </div>
 
 
@@ -36,7 +36,14 @@
         @for (int i = 0; i <= 6; i++)
         {
             string day = week[i] == 0 ? "" : week[i].ToString();
-            <MudTd DataLabel="@(((DayOfWeek)(i)).ToString())" Class="boxed-cell" @onclick="() => OpenDialog(day)">@day</MudTd>
+            bool hasEvent = eventDays.Contains(week[i]);
+            <MudTd DataLabel="@(((DayOfWeek)(i)).ToString())" Class="boxed-cell" @onclick="() => OpenDialog(day)">
+                @day
+                @if (hasEvent)
+                {
+                    <span class="dot"></span>
+                }
+            </MudTd>
         }
     </RowTemplate>
 </MudTable>
@@ -64,13 +71,22 @@
     .mud-table-cell{
         padding: 0
     }
-    .mud-selector
+
+    .dot {
+        height: 10px;
+        width: 10px;
+        background-color: red;
+        border-radius: 50%;
+        display: inline-block;
+        margin-left: 5px;
+    }
 </style>
 @code {
     List<int[]> calendar;
     DateTime currentMonth;
     string selectedMonth;
     int selectedYear;
+    List<int> eventDays = new List<int>();
 
     protected override void OnInitialized()
     {
@@ -99,13 +115,38 @@
                 week = new int[7];
             }
         }
+        FetchEventDays();
     }
 
+    async void FetchEventDays()
+    {
+       
+        eventDays.Clear(); // Clear the list before populating with new event days
+
+        List<EventClass> eventDates = await Http.GetFromJsonAsync<List<EventClass>>("/api/event");
+        eventDays = eventDates
+            .Where(d => d.DateTime.HasValue && d.DateTime.Value.Year == currentMonth.Year && d.DateTime.Value.Month == currentMonth.Month)
+            .Select(d => d.DateTime.Value.Day)
+            .ToList();
+        
+    }
     void UpdateMonth()
     {
         int monthNumber = Array.IndexOf(CultureInfo.CurrentCulture.DateTimeFormat.MonthNames, selectedMonth) + 1;
         currentMonth = new DateTime(selectedYear, monthNumber, 1);
         GenerateCalendar();
+    }
+
+    void OnYearChange(int value)
+    {
+        selectedYear = value;
+        UpdateMonth();
+    }
+
+    void OnMonthChange(string value)
+    {
+        selectedMonth = value;
+        UpdateMonth();
     }
     async Task OpenDialog(string day)
     {
