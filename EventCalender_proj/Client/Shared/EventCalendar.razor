@@ -82,42 +82,56 @@
     }
 </style>
 @code {
+    //Variables for the calendar generation and event marking
     List<int[]> calendar;
     DateTime currentMonth;
     string selectedMonth;
     int selectedYear;
     List<int> eventDays = new List<int>();
 
-    protected override void OnInitialized()
+    protected override void OnInitialized() //Setting the initial state
     {
-        currentMonth = DateTime.Now; // start with the current month
+        currentMonth = DateTime.Now; //start with the current month
         selectedMonth = currentMonth.ToString("MMMM");
         selectedYear = currentMonth.Year;
-        GenerateCalendar();
+        GenerateCalendar(); //generate the calendar for the current month
     }
 
-    void GenerateCalendar()
+    void GenerateCalendar() //Generates the calendar for the current month
     {
-        calendar = new List<int[]>();
+        calendar = new List<int[]>(); // Initializes the `calendar` list which will contain arrays representing weeks of a month.
+
+        // Calculates the number of days in the current month
         int daysInMonth = DateTime.DaysInMonth(currentMonth.Year, currentMonth.Month);
+
+        // Gets the day of the week for the first day of the current month.
+        // `DayOfWeek` returns a value from 0 (Sunday) to 6 (Saturday), so we adjust the value to get 1 (Monday) to 7 (Sunday).
         int startDayOfWeek = (int)new DateTime(currentMonth.Year, currentMonth.Month, 1).DayOfWeek;
         startDayOfWeek = (startDayOfWeek == 0) ? 7 : startDayOfWeek; // Adjust for Sunday
-        int[] week = new int[7];
+
+        int[] week = new int[7]; // Initializes an array to hold a week's worth of days.
+
+        // Loops through all the days from the first day of the week to the last day of the month.
         for (int day = 1; day <= daysInMonth + startDayOfWeek - 1; day++)
         {
+            // If it's a day in the current month, add it to the week.
             if (day >= startDayOfWeek)
                 week[(day - 1) % 7] = day - startDayOfWeek + 1;
 
+            // If it's the end of a week or the end of the month, add the week to the calendar
+            // and start a new week.
             if (day % 7 == 0 || day == daysInMonth + startDayOfWeek - 1)
             {
                 calendar.Add(week);
                 week = new int[7];
             }
         }
+
+        // Fetches the days that have events in the current month.
         FetchEventDays();
     }
 
-    async void FetchEventDays()
+    async void FetchEventDays()//Fetches event days from the server for the current month
     {
        
         eventDays.Clear(); // Clear the list before populating with new event days
@@ -129,33 +143,45 @@
             .ToList();
         
     }
-    void UpdateMonth()
+    void UpdateMonth()// Updates the current month and generates the calendar for the new month
     {
         int monthNumber = Array.IndexOf(CultureInfo.CurrentCulture.DateTimeFormat.MonthNames, selectedMonth) + 1;
         currentMonth = new DateTime(selectedYear, monthNumber, 1);
         GenerateCalendar();
     }
-
+    // Called when the selected Year changes
     void OnYearChange(int value)
     {
         selectedYear = value;
-        UpdateMonth();
+        UpdateMonth();// update the Year and generate the new calendar
     }
 
+    // Called when the selected month changes
     void OnMonthChange(string value)
     {
         selectedMonth = value;
-        UpdateMonth();
+        UpdateMonth();// update the month and generate the new calendar
     }
-    async Task OpenDialog(string day)
+    async Task OpenDialog(string day) // Opens a dialog with details about events on the selected day
     {
-        if (!string.IsNullOrEmpty(day))
+        if (!string.IsNullOrEmpty(day)) // Only proceed if the day string is not empty
         {
+            // Create a DateTime object representing the selected date using the year and month from the `currentMonth` variable
+            // and the day parsed from the input string
             DateTime selectedDate = new DateTime(currentMonth.Year, currentMonth.Month, int.Parse(day));
+
+            // Create a new instance of DialogParameters, which will hold parameters to be passed to the dialog
             var parameters = new DialogParameters();
+
+            // Add the `selectedDate` to the dialog parameters with the key "SelectedDate"
             parameters.Add("SelectedDate", selectedDate);
 
+            // Open the dialog using the DialogService. The dialog is of type `EventDialogt`, it has the title "Events", and
+            // it receives the `parameters` object we just created. The `Show` method returns a reference to the opened dialog.
             var dialog = DialogService.Show<EventDialogt>("Events", parameters);
+
+            // Wait for the dialog to be closed and store its result. The `Result` property is a Task that completes when the
+            // dialog is closed, and its Result property contains the result passed to the `Close` method of the dialog.
             var result = await dialog.Result;
         }
     }
