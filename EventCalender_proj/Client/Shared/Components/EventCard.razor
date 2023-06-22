@@ -12,8 +12,8 @@
         <MudText Class="mb-4" Typo="Typo.body2">Description: @model.Description</MudText>
     </MudCardContent>
     <MudCardActions Class="justify-center">
-        <MudButton Class="mr-2" Color="Color.Primary" Variant="Variant.Outlined" OnClick="DeleteEvent">Delete</MudButton>
-        <MudButton Color="Color.Primary" Variant="Variant.Outlined" OnClick="() => EditEvent()">Edit</MudButton>
+        <MudButton Class="mr-2" Variant="Variant.Filled" StartIcon="@Icons.Material.Filled.Delete" Color="Color.Error" OnClick="DeleteEvent">Delete</MudButton>
+        <MudButton Color="Color.Primary" Variant="Variant.Filled" OnClick="() => EditEvent()">Edit</MudButton>
     </MudCardActions>
 </MudCard>
 
