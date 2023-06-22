@@ -42,9 +42,19 @@
         // Method to edit an event
         private void EditEvent()
         {
+            // Create a new instance of DialogParameters, which will hold parameters to be passed to the dialog
             var parameters = new DialogParameters();
+
+            // Add the `model` to the dialog parameters with the key "Event"
+            // `model` is assumed to be a variable in your code representing the event to be edited
             parameters.Add("Event", model);
+
+            // Create an instance of DialogOptions to customize the behavior and appearance of the dialog
+            // Here, a close button is added to the dialog and its maximum width is set to extra small
             var options = new DialogOptions() { CloseButton = true, MaxWidth = MaxWidth.ExtraSmall };
-            DialogService.Show<EditEventDialog>("Edit Event", parameters, options);
+
+            // Open the dialog using the DialogService. The dialog is of type `EditEventDialog`, it has the title "Edit Event", and
+            // it receives the `parameters` object we just created. The `options` object is also passed to customize the dialog.
+               DialogService.Show<EditEventDialog>("Edit Event", parameters, options);
         }
 }

@@ -1,0 +1,78 @@
+﻿@page "/SearchEvent"
+@using EventCalender_proj.Client.Shared.Components;
+@using EventCalender_proj.Client.Shared.Models;
+@using MudBlazor;
+@using MudBlazor.Services;
+@using System.Globalization
+@inject IDialogService DialogService;
+@inject HttpClient Http
+
+
+
+<MudContainer>
+    <MudText Typo="Typo.h3">Search Events</MudText>
+
+    <MudTextField Label="Search by event name" @bind-Value="searchValue" Immediate="true" Class="my-4" Variant="Variant.Outlined" Adornment="Adornment.Start" AdornmentIcon="@Icons.Material.Filled.Search" OnKeyPress="@(e => OnKeyPressHandler(e))" />
+
+    @if (filteredEvents == null)
+    {
+        <MudText><em>Loading...</em></MudText>
+    }
+    else if (filteredEvents.Count == 0)
+    {
+        <MudText>No events found.</MudText>
+    }
+    else
+    {
+        foreach (var ev in filteredEvents)
+        {
+            <MudPaper Outlined="true" Class="pa-4 my-2">
+                <MudText Typo="Typo.h5">@ev.Name (Id: @ev.Id)</MudText>
+                <MudText>Date: @ev.DateTime?.ToString("MM/dd/yyyy HH:mm")</MudText>
+                <MudText>Description: @ev.Description</MudText>
+            </MudPaper>
+        }
+    }
+</MudContainer>
+
+@code {
+
+    private string searchValue = "";
+    private List<EventClass> events;
+    private List<EventClass> filteredEvents;
+
+    protected override async Task OnInitializedAsync()
+    {
+        events = await Http.GetFromJsonAsync<List<EventClass>>("api/event"); // Fetches all events from the API
+        filteredEvents = events; // Initializes filteredEvents with all events
+    }
+
+    private void FilterEvents()
+    {
+        string lowercaseSearchValue = searchValue.ToLowerInvariant(); // Converts searchValue to lowercase for case-insensitive comparison
+
+        if (string.IsNullOrWhiteSpace(searchValue))
+        {
+            filteredEvents = events; // If searchValue is empty or whitespace, show all events
+        }
+        else
+        {
+            filteredEvents = events
+                .Where(e => e.Name.ToLowerInvariant().Contains(lowercaseSearchValue)) // Filters events based on partial matches of the event name
+                .ToList();
+        }
+    }
+
+    private void OnKeyPressHandler(KeyboardEventArgs e)
+    {
+        if (e.Key == "Enter")
+        {
+            FilterEvents(); // Triggers event filtering when the Enter key is pressed
+            StateHasChanged(); // Notifies Blazor that the state has changed
+        }
+    }
+}
+
+
+
+
