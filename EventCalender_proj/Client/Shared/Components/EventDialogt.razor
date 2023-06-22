@@ -5,7 +5,10 @@
 
 <MudDialog>
     <DialogContent>
-        <EventCard model="model"></EventCard>
+        @foreach (var eventItem in events)
+        {
+            <EventCard model="eventItem"></EventCard>
+        }
     </DialogContent>
     <DialogActions>
         <MudButton OnClick="Cancel">Cancel</MudButton>
@@ -16,18 +19,42 @@
 
     [CascadingParameter] MudDialogInstance MudDialog { get; set; }
 
+    [Parameter] public DateTime SelectedDate { get; set; }
+
     public EventClass model { get; set; }
+    List<EventClass> events = new List<EventClass>();
     private bool showEventCard = false; // Flag to control the display of the EventCard
     private int eventId = 1; // The ID of the event you want to display
+    private DateTime clickedDate;
 
-    public async Task GetEventData(int id)
+
+
+    public async Task GetEventsByDate(DateTime clickedDate)
     {
-        model = await Http.GetFromJsonAsync<EventClass>($"/api/event/{id}");
+        // Fetch all events from the API
+        List<EventClass> allEvents = await Http.GetFromJsonAsync<List<EventClass>>("/api/event");
+
+        // Filter events based on the specified date
+        events = allEvents.Where(e => e.DateTime?.Date == SelectedDate.Date).ToList();
+
     }
+
     protected override async Task OnInitializedAsync()
     {
-        await GetEventData(eventId);
+        await GetEventsByDate(SelectedDate);
     }
+
+    //public async task geteventdata(int id)
+    //{
+    //    model = await http.getfromjsonasync<eventclass>($"/api/event/{id}");
+    //}
+    //protected override async task oninitializedasync()
+    //{
+
+    //    clickeddate = datetime.today; // initialize the clickeddate property with today's date
+    //    await geteventsbydate(clickeddate);
+    //}
+
     // This method is called when the button is clicked
     private void LoadEvent()
     {

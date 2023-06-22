@@ -1309,7 +1309,8 @@
     "net7.0": [
       "EventCalender_proj.Client >= 1.0.0",
       "EventCalender_proj.Shared >= 1.0.0",
-      "Microsoft.AspNetCore.Components.WebAssembly.Server >= 7.0.7"
+      "Microsoft.AspNetCore.Components.WebAssembly.Server >= 7.0.7",
+      "MudBlazor >= 6.4.1"
     ]
   },
   "packageFolders": {
@@ -1370,6 +1371,10 @@
           "Microsoft.AspNetCore.Components.WebAssembly.Server": {
             "target": "Package",
             "version": "[7.0.7, )"
+          },
+          "MudBlazor": {
+            "target": "Package",
+            "version": "[6.4.1, )"
           }
         },
         "imports": [

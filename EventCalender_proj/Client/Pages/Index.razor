@@ -5,10 +5,9 @@
 @using MudBlazor.Services;
 @inject IDialogService DialogService;
 
+<h1>Jose's Calendar</h1>
 
-<MudButton OnClick="OpenModal">Add New Event</MudButton>
-
-<h1>Calendar!</h1>
+<MudButton Color="Color.Primary" Variant="Variant.Filled"  OnClick="OpenModal">Add New Event</MudButton>
 
 <EventCalendar></EventCalendar>
 
@@ -19,4 +18,55 @@
         var options = new DialogOptions { CloseOnEscapeKey = true };
         DialogService.Show<AddEventDialog>("Event", options);
     }
+
+    //// This line creates a list property named 'events' of type 'EventClass',
+    //// and initializes it as an empty list. The 'get' and 'set' accessors
+    //// allow this property to be accessed and modified.
+    //public List<EventClass> events { get; set; } = new List<EventClass>();
+
+    //// The 'OnInitializedAsync' method is a lifecycle method in Blazor components
+    //// that runs once when the component is first initialized. In this case,
+    //// it is being used to call the 'GetEvents' method to load the event data.
+    //protected override async Task OnInitializedAsync()
+    //{
+    //    await GetEvents();
+    //}
+
+    //// The 'OpenModal' method opens a dialog for adding new events. This method
+    //// is marked as 'async' to allow for asynchronous operations, such as waiting
+    //// for the dialog result.
+    //public async void OpenModal()
+    //{
+    //    // Options for the dialog are set up here. In this case, the dialog is set
+    //    // to close when the escape key is pressed.
+    //    var options = new DialogOptions { CloseOnEscapeKey = true };
+
+    //    // This line opens the dialog with the specified options.
+    //    var dialog = DialogService.Show<AddEventDialog>("Event", options);
+
+    //    // This line waits for the dialog to return a result, and then stores that result.
+    //    var result = await dialog.Result;
+
+    //    if (result.Cancelled)
+    //    {
+    //        // If the dialog was cancelled, a message is written to the console.
+    //        Console.WriteLine("Dialog was cancelled");
+    //    }
+    //    else
+    //    {
+    //        // If the dialog was not cancelled, the 'GetEvents' method is called again
+    //        // to refresh the events list, and the 'StateHasChanged' method forces the
+    //        // component to re-render.
+    //        await GetEvents();
+    //        StateHasChanged();
+    //    }
+    //}
+
+    //// The 'GetEvents' method is an asynchronous method that retrieves the list of
+    //// events from the server by sending a GET request to the specified API endpoint
+    //// '/api/event', and then assigns the returned list to the 'events' property.
+    //public async Task GetEvents()
+    //{
+    //    events = await Http.GetFromJsonAsync<List<EventClass>>("/api/event");
+    //}
 }

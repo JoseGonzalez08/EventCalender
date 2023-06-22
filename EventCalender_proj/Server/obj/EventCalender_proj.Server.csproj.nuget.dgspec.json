@@ -148,6 +148,10 @@
             "Microsoft.AspNetCore.Components.WebAssembly.Server": {
               "target": "Package",
               "version": "[7.0.7, )"
+            },
+            "MudBlazor": {
+              "target": "Package",
+              "version": "[6.4.1, )"
             }
           },
           "imports": [

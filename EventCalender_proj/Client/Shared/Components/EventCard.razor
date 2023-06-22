@@ -2,20 +2,46 @@
 @using EventCalender_proj.Client.Shared.Models;
 @using MudBlazor;
 @inject IDialogService DialogService;
+@inject HttpClient Http; 
 @using System.Collections.Generic;
 
-<MudCard>
+<MudCard Class="m-4">
     <MudCardContent>
-        <MudText>Name @model.Name</MudText>
-        <MudText Typo="Typo.body2">Date @model.DateTime</MudText>
-        <MudText Typo="Typo.body2">Description @model.Description</MudText>
+        <MudText Class="mb-2" Typo="Typo.h6">Name: @model.Name</MudText>
+        <MudText Class="mb-2" Typo="Typo.body2">Date: @model.DateTime?.ToString("g")</MudText>
+        <MudText Class="mb-4" Typo="Typo.body2">Description: @model.Description</MudText>
     </MudCardContent>
-    <MudCardActions>
+    <MudCardActions Class="justify-center">
+        <MudButton Class="mr-2" Color="Color.Primary" Variant="Variant.Outlined" OnClick="DeleteEvent">Delete</MudButton>
+        <MudButton Color="Color.Primary" Variant="Variant.Outlined" OnClick="() => EditEvent()">Edit</MudButton>
     </MudCardActions>
 </MudCard>
 @code {
     [Parameter]
     public EventClass model { get; set; }
 
+    private async Task DeleteEvent()
+    {
+        // Make the API call to delete the event
+        var response = await Http.DeleteAsync($"/api/event/{model.Id}");
+
+        if (response.IsSuccessStatusCode)
+        {
+            // Show a dialog or some other notification to let the user know that the event was deleted successfully
+            DialogService.ShowMessageBox("Success", "The event has been deleted successfully.");
+        }
+        else
+        {
+            // Show an error message
+            DialogService.ShowMessageBox("Error", "An error occurred while trying to delete the event.");
+        }
+    }
+    private void EditEvent()
+    {
+        var parameters = new DialogParameters();
+        parameters.Add("Event", model);
+        var options = new DialogOptions() { CloseButton = true, MaxWidth = MaxWidth.ExtraSmall };
+        DialogService.Show<EditEventDialog>("Edit Event", parameters, options);
+    }
 
 }

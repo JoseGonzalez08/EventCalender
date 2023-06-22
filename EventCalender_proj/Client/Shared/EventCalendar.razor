@@ -1,187 +1,122 @@
-﻿@using EventCalender_proj.Client.Shared.Components;
+﻿@page "/c"
+@using EventCalender_proj.Client.Shared.Components;
 @using EventCalender_proj.Client.Shared.Models;
 @using MudBlazor;
 @using MudBlazor.Services;
+@using System.Globalization
 @inject IDialogService DialogService;
+@inject HttpClient Http
 
-
-@*<MudButton @onclick="OpenModal" Variant="Variant.Filled" Color="Color.Primary">
-    Open Simple Dialog
-</MudButton>*@
-<select @onchange="LoadCalender">
-    <!-- Loop through monthNames and create an <option> element for each month -->
-    @foreach (string monthName in monthNames)
-    {
-        <option> @monthName</option>
-    }
-</select>
-
-<table class="table tables-bordered table-striped">
-    <thead>
-        <tr>
-
-            <!-- Loop through Day array and create a <th> element for each day -->
-            @for (var dayIndex = 0; dayIndex < Day.Count(); dayIndex++)
-            {
-                <th>
-                    @Day[dayIndex]
-                </th>
-            }
-        </tr>
-    </thead>
-    <tbody>
-        <!-- Loop through weeks array -->
-        @for (var weekIndex = 0; weekIndex < weeks.Count(); weekIndex++)
+<div class="controls" style="display: flex; justify-content: flex-end; gap: 1%;">
+    <MudSelect T="string" Label="Select Month" @bind-Value="@selectedMonth" Variant="Variant.Outlined" Dense="true">
+        @foreach (var month in CultureInfo.CurrentCulture.DateTimeFormat.MonthNames.Where(m => !string.IsNullOrEmpty(m)))
         {
-            <tr>
-                <!-- Loop through Dates array in the current week -->
-                @for (var dayIndex = 0; dayIndex < weeks[weekIndex].Dates.Count(); dayIndex++)
-                {
-                    var wkIndex = weekIndex;
-                    var dyIndex = dayIndex;
-
-                    <td @ondblclick="@(()=>OpenModal())">
-                        <!-- Display the DateValue for the current cell -->
-                        @weeks[weekIndex].Dates[dayIndex].DateValue
-                        <br><br>
-                        <!-- Display the Note for the current cell with specific style -->
-                        <label style="color:#c00; font-weight: bold">@weeks[weekIndex].Dates[dayIndex].Note</label>
-
-                        <!-- Display the cell number in the format [weekIndex, dayIndex] -->
-                        @*Cell Number : [@weekIndex, @dayIndex]*@
-                    </td>
-                }
-            </tr>
+            <MudSelectItem Value="@month">@month</MudSelectItem>
         }
-    </tbody>
-</table>
-@code{
-    bool displayModal = false; //Declare and initialize a boolean variable named displayModal with the initial value of false
-    List<String> monthNames = new List<string>();//Stores the names of the months
-    List<String> Day = new List<string>();//Stores the days of the month
-    List<WeekClass> weeks = new List<WeekClass>(); //Represents the weeks of the month
-    DateTime StartDate = new DateTime(DateTime.Now.Year, DateTime.Now.Month, 1); //Gets the current year and month as the start date
-    DateTime EndDate = (new DateTime(DateTime.Now.Year, DateTime.Now.Month, 1)).AddMonths(1).AddDays(-1); //Gets the last day of the current month
+    </MudSelect>
+
+    <MudNumericField T="int" Label="Year" @bind-Value="@selectedYear" Variant="Variant.Outlined" Dense="true" />
+    <MudButton Color="Color.Primary" Variant="Variant.Filled" OnClick="UpdateMonth">Update</MudButton>
+</div>
+
+
+<MudTable Items="@calendar" Breakpoint="Breakpoint.Sm">
+    <HeaderContent>
+        <MudTh></MudTh>
+        @{
+            string[] daysOfWeek = new string[] { "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday" };
+            foreach (var day in daysOfWeek)
+            {
+                <MudTh>@day</MudTh>
+            }
+        }
+    </HeaderContent>
+    <RowTemplate Context="week">
+        <MudTd DataLabel=""></MudTd>
+        @for (int i = 0; i <= 6; i++)
+        {
+            string day = week[i] == 0 ? "" : week[i].ToString();
+            <MudTd DataLabel="@(((DayOfWeek)(i)).ToString())" Class="boxed-cell" @onclick="() => OpenDialog(day)">@day</MudTd>
+        }
+    </RowTemplate>
+</MudTable>
+<style>
+    .boxed-cell {
+        border: 1px solid #ccc;
+        padding: 0;
+        text-align: center;
+        background-color: #f5f5f5;
+        height: 100px; /* Adjust the height as needed */
+    }
+
+    .cell-content {
+        height: 100%;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        padding: 5px;
+        font-size: 14px;
+    }
+
+    .day-number {
+        font-weight: bold;
+    }
+    .mud-table-cell{
+        padding: 0
+    }
+    .mud-selector
+</style>
+@code {
+    List<int[]> calendar;
+    DateTime currentMonth;
+    string selectedMonth;
+    int selectedYear;
 
     protected override void OnInitialized()
     {
-        //Get the month names from the current culture's DateTimeFormat and convert it to a list
-        monthNames = System.Globalization.CultureInfo.CurrentCulture.DateTimeFormat.MonthGenitiveNames.ToList();
-
-        //Call the methods to generate the calendar head and body
-        GenerateCalenderHead();
-        GenerateCalenderBody();
+        currentMonth = DateTime.Now; // start with the current month
+        selectedMonth = currentMonth.ToString("MMMM");
+        selectedYear = currentMonth.Year;
+        GenerateCalendar();
     }
 
-
-    public void LoadCalender(ChangeEventArgs e)
+    void GenerateCalendar()
     {
-        //Get the selected month from the event arguments and convert it to a string
-        var month = e.Value.ToString();
-
-        //Parse the selected month string into a DateTime object, assuming the format is "MMMM"  ("June")
-        int monthIndex = DateTime.ParseExact(month, "MMMM", System.Globalization.CultureInfo.CreateSpecificCulture("en-GB")).Month;
-
-        //Set the StartDate to the first day of the selected month, using the current year
-        StartDate = new DateTime(DateTime.Now.Year, monthIndex, 1);
-
-        // Set the EndDate to the last day of the selected month, using the current year
-        EndDate = (new DateTime(DateTime.Now.Year, monthIndex, 1)).AddMonths(1).AddDays(-1);
-
-        // Call the methods to generate the calendar head and body
-        GenerateCalenderHead();
-        GenerateCalenderBody();
-    }
-
-    public void GenerateCalenderHead()
-    {
-        //Here We Create a new list to store the day names
-        var day1 = new List<string>();
-
-        //This will Loop through the dates from StartDate to EndDate, incrementing one day
-        for (var date = StartDate; date <= EndDate; date = date.AddDays(1))
+        // clear out the old calendar
+        calendar = new List<int[]>();
+        int daysInMonth = DateTime.DaysInMonth(currentMonth.Year, currentMonth.Month);
+        int startDayOfWeek = (int)new DateTime(currentMonth.Year, currentMonth.Month, 1).DayOfWeek;
+        startDayOfWeek = (startDayOfWeek == 0) ? 7 : startDayOfWeek; // Adjust for Sunday
+        int[] week = new int[7];
+        for (int day = 1; day <= daysInMonth + startDayOfWeek - 1; day++)
         {
-            //This Add the day of the week (in string format) to the day1 list
-            day1.Add(date.ToString("dddd"));
-        }
+            if (day >= startDayOfWeek)
+                week[(day - 1) % 7] = day - startDayOfWeek + 1;
 
-        //Here we will Remove the duplicates from the day1 list and convert it to a distinct list of days
-        Day = day1.Distinct().ToList();
-    }
-
-    public void GenerateCalenderBody()
-    {
-        // Create a new list to store the weeks of the calendar
-        weeks = new List<WeekClass>();
-
-        // Initialize a flag to keep track of the days in a week
-        int flag = 0;
-
-        // Create a new WeekClass instance to represent a week
-        WeekClass week = new WeekClass();
-
-        // Create a new list to store the day events within a week
-        List<DayEvent> dates = new List<DayEvent>();
-
-        // Calculate the total number of days between StartDate and EndDate
-        var totalDays = (int)(EndDate - StartDate).TotalDays;
-
-        // Initialize a counter to track the number of processed days
-        int countdays = 0;
-
-        // Loop through each date from StartDate to EndDate
-        for (var date = StartDate; date <= EndDate; date = date.AddDays(1))
-        {
-            // Increment the flag to count the days within a week
-            flag++;
-
-            // Create a new DayEvent instance for the current date and add it to the dates list
-            dates.Add(new DayEvent()
-                {
-                    DateValue = date.ToString("dd-MMM-yyyy"),// Format the date as "dd-MMM-yyyy" (18-Jun-2023)
-                    DateName = date.ToString("dddd")// Get the day name of the date (Monday)
-                });
-
-            // Check if a week (7 days) is complete
-            if (flag == 7)
+            if (day % 7 == 0 || day == daysInMonth + startDayOfWeek - 1)
             {
-                // Create a new WeekClass instance and assign the dates list to it
-                week = new WeekClass();
-                week.Dates = dates;
-
-                // Add the week to the weeks list
-                weeks.Add(week);
-
-                // Reset the dates list and the flag for the next week
-                dates = new List<DayEvent>();
-                flag = 0;
+                calendar.Add(week);
+                week = new int[7];
             }
-
-            // Check if all the days have been processed
-            if (countdays == totalDays)
-            {
-                // Create a new WeekClass instance and assign the dates list to it
-                week = new WeekClass();
-                week.Dates = dates;
-
-                // Add the week to the weeks list
-                weeks.Add(week);
-
-                // Exit the loop since all the days have been processed
-                break;
-            }
-
-            // Increment the counter for the processed days
-            countdays++;
         }
     }
 
-    public void OpenModal()
+    void UpdateMonth()
     {
-        // retrieve the date information or any other necessary data from the clicked cell
-        var options = new DialogOptions { CloseOnEscapeKey = true };
-        DialogService.Show<EventDialogt>("Event", options);
+        int monthNumber = Array.IndexOf(CultureInfo.CurrentCulture.DateTimeFormat.MonthNames, selectedMonth) + 1;
+        currentMonth = new DateTime(selectedYear, monthNumber, 1);
+        GenerateCalendar();
     }
+    async Task OpenDialog(string day)
+    {
+        if (!string.IsNullOrEmpty(day))
+        {
+            DateTime selectedDate = new DateTime(currentMonth.Year, currentMonth.Month, int.Parse(day));
+            var parameters = new DialogParameters();
+            parameters.Add("SelectedDate", selectedDate);
 
-
+            var dialog = DialogService.Show<EventDialogt>("Event Dialog", parameters);
+            var result = await dialog.Result;
+        }
+    }
 }

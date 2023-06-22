@@ -18,6 +18,8 @@ namespace EventCalender_proj.Client.Shared.Models
         public string DateValue { get; set; }
         public string DateName { get; set; }
         public string Message { get; set; }
+        public List<EventClass> Events { get; set; }  // Add this property
+
 
     }
 }

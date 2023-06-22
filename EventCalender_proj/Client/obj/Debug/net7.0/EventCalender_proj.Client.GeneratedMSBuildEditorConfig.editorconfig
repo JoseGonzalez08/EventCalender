@@ -40,6 +40,10 @@ build_metadata.AdditionalFiles.CssScope =
 build_metadata.AdditionalFiles.TargetPath = U2hhcmVkXENvbXBvbmVudHNcQWRkRXZlbnREaWFsb2cucmF6b3I=
 build_metadata.AdditionalFiles.CssScope = 
 
+[C:/Users/joseg/source/repos/EventCalender/EventCalender_proj/EventCalender_proj/Client/Shared/Components/EditEventDialog.razor]
+build_metadata.AdditionalFiles.TargetPath = U2hhcmVkXENvbXBvbmVudHNcRWRpdEV2ZW50RGlhbG9nLnJhem9y
+build_metadata.AdditionalFiles.CssScope = 
+
 [C:/Users/joseg/source/repos/EventCalender/EventCalender_proj/EventCalender_proj/Client/Shared/Components/EventCard.razor]
 build_metadata.AdditionalFiles.TargetPath = U2hhcmVkXENvbXBvbmVudHNcRXZlbnRDYXJkLnJhem9y
 build_metadata.AdditionalFiles.CssScope = 

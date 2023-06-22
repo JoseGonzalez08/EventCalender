@@ -37,10 +37,11 @@
         // Send a POST request to the API endpoint
         await Http.PostAsJsonAsync("/api/event", model);
     }
-    void Submit()
+    async void Submit()
     {
         // Call InsertEventData when the Submit button is clicked
         InsertEventData();
+        MudDialog.Close(DialogResult.Ok(model));
     }
     void Cancel() => MudDialog.Cancel();
 }

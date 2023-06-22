@@ -32,7 +32,7 @@ namespace EventCalender_proj.Server.Services
             // Initialize the Events list with some sample data
             Events = new List<EventClass>()
             {
-                 new EventClass() {Id = 1, DateTime = DateTime.Now, Name = "event1", Description = "birthday party"},
+                new EventClass() {Id = 1, DateTime = new DateTime(DateTime.Now.Year, 6, 1), Name = "event1", Description = "birthday party"},
                  new EventClass() {Id = 2, DateTime = DateTime.Now, Name = "event2", Description = " party"},
                  new EventClass() {Id = 3, DateTime = DateTime.Now, Name = "event3", Description = "Graduation"},
                  new EventClass() {Id = 4, DateTime = DateTime.Now, Name = "event4", Description = "holiday"},
